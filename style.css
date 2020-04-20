@@ -10,7 +10,7 @@ body {
 
 .container {
 	max-width: 750px;
-	margin: 20px auto;
+	margin: 10px auto;
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
@@ -45,4 +45,11 @@ body {
 
 .description h4 {
 	color: #6c6e71;
+}
+
+select {
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	padding: 5px;
 }

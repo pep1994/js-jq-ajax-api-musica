@@ -7,8 +7,8 @@
 var source = $("#album-template").html();
 var template = Handlebars.compile(source);
 
-// imposto di default il valore vuoto per il select
-$("select").val("");
+// imposto di default il valore "all" per il select, in modo che si vedano tutte le cover
+$("select").val("all");
 
 // eseguo chiamata ajax
 $.ajax({
@@ -17,7 +17,7 @@ $.ajax({
 	method: "GET",
 
 	success: function (data, stato) {
-		// salvo in una variabile il risultato della chimata
+		// salvo in una variabile il risultato della chiamata ajax
 		var dataResult = data.response;
 		console.log(dataResult);
 		console.log(stato);
@@ -33,35 +33,38 @@ $.ajax({
 				genere: dataResult[i].genre.toLowerCase(),
 			};
 
-			var generiMusicali = dataResult[i].genre;
-			console.log(generiMusicali);
-
 			var html = template(context);
 
 			// stampo in pagina il template
 			$(".container").append(html);
-
-			// aggancio l'evento input al select
-			$("select").on({
-				input: function () {
-					var valInput = $("select").val();
-					console.log(valInput);
-					$(".cover").hide();
-					console.log($(this));
-
-					$(".cover").each(function () {
-						var genereCover = $(this).data("genere");
-						if (valInput == genereCover) {
-							$(this).show();
-						}
-					});
-
-					if (valInput == "all") {
-						$(".cover").show();
-					}
-				},
-			});
 		}
+
+		// aggancio l'evento input al select
+		$("select").on({
+			input: function () {
+				// salvo in unavariabile il valore di select
+				var valInput = $("select").val();
+				console.log(valInput);
+				// nascondo tutte le cover
+				$(".cover").hide();
+				console.log($(this));
+
+				// eseguo un ciclo su tutte le cover per estrapolare il valore del data-attribute di ogni cover
+				$(".cover").each(function () {
+					// questo valore lo salvo in una variabile
+					var genereCover = $(this).data("genere");
+					// se il valore dell'input è uguale al valore del data-attribute di quella cover allora mostrami questa cover
+					if (valInput == genereCover) {
+						$(this).show();
+					}
+				});
+
+				// se il valore dell'input è "all" allora mostrami tutte le cover
+				if (valInput == "all") {
+					$(".cover").show();
+				}
+			},
+		});
 	},
 
 	error: function (richiesta, stato, errore) {},
