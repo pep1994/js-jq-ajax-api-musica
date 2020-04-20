@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Music-API</title>
+		<link rel="stylesheet" href="style.css" />
+	</head>
+	<body>
+		<div class="container">
+			<!-- Template -->
+			<script id="album-template" type="text/x-handlebars-template">
+				<div class="cover">
+					<div class="album">
+						<img src="{{album}}" alt="album" />
+					</div>
+					<div class="description">
+						<h3>
+							{{title}}
+						</h3>
+						<h4>
+							{{author}}
+						</h4>
+						<h4>
+							{{year}}
+						</h4>
+					</div>
+				</div>
+			</script>
+		</div>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.6/handlebars.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script src="main.js"></script>
+	</body>
+</html>
