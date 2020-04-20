@@ -7,6 +7,9 @@
 var source = $("#album-template").html();
 var template = Handlebars.compile(source);
 
+// imposto di default il valore vuoto per il select
+$("select").val("");
+
 // eseguo chiamata ajax
 $.ajax({
 	url: "https://flynn.boolean.careers/exercises/api/array/music",
@@ -27,12 +30,37 @@ $.ajax({
 				title: dataResult[i].title,
 				author: dataResult[i].author,
 				year: dataResult[i].year,
+				genere: dataResult[i].genre.toLowerCase(),
 			};
+
+			var generiMusicali = dataResult[i].genre;
+			console.log(generiMusicali);
 
 			var html = template(context);
 
 			// stampo in pagina il template
 			$(".container").append(html);
+
+			// aggancio l'evento input al select
+			$("select").on({
+				input: function () {
+					var valInput = $("select").val();
+					console.log(valInput);
+					$(".cover").hide();
+					console.log($(this));
+
+					$(".cover").each(function () {
+						var genereCover = $(this).data("genere");
+						if (valInput == genereCover) {
+							$(this).show();
+						}
+					});
+
+					if (valInput == "all") {
+						$(".cover").show();
+					}
+				},
+			});
 		}
 	},
 
